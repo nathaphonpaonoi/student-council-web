@@ -28,6 +28,17 @@ interface ContactInfo {
 }
 
 export default function Home() {
+  // ฟังก์ชันคืนค่า Tailwind gradient class ตามสี
+  const getGradientClass = (color: string): string => {
+    const gradients: { [key: string]: string } = {
+      blue: 'bg-gradient-to-br from-blue-400 to-blue-600',
+      green: 'bg-gradient-to-br from-green-400 to-green-600',
+      purple: 'bg-gradient-to-br from-purple-400 to-purple-600',
+      red: 'bg-gradient-to-br from-red-400 to-red-600',
+    };
+    return gradients[color] || gradients.blue;
+  };
+
   const news: NewsItem[] = [
     {
       id: 1,
@@ -105,7 +116,7 @@ export default function Home() {
             {departments.map((dept, index) => (
               <Link key={index} href={dept.path}>
                 <div
-                  className={`bg-gradient-to-br from-${dept.color}-400 to-${dept.color}-600 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition cursor-pointer text-center`}
+                  className={`${getGradientClass(dept.color)} text-white p-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition cursor-pointer text-center`}
                 >
                   <div className="text-5xl mb-3">{dept.icon}</div>
                   <h3 className="text-lg font-bold">{dept.name}</h3>
