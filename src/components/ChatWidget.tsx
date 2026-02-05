@@ -219,23 +219,23 @@ export default function ChatWidget() {
     <div className="fixed bottom-4 right-4 z-50">
       {/* เมื่อ widget เปิด: แสดง Chat Box */}
       {isOpen ? (
-        <div className="bg-white rounded-lg shadow-2xl w-96 h-96 flex flex-col border-2 border-blue-500">
+        <div className="bg-white rounded-lg shadow-2xl w-full sm:w-96 h-screen sm:h-96 flex flex-col border-2 border-blue-500 max-w-[95vw] max-h-[90vh]">
           {/* ส่วนหัวของ Chat */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 rounded-t-md">
-            <div className="flex justify-between items-start mb-2">
-              <div>
-                <h3 className="font-bold text-lg">💬 แชทกับแอดมิน</h3>
+          <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 rounded-t-md sticky top-0 z-10">
+            <div className="flex justify-between items-start mb-2 gap-2">
+              <div className="flex-1">
+                <h3 className="font-bold text-lg">💬 แชท</h3>
                 <p className="text-xs opacity-80">พรรคเพื่อเธอ</p>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-shrink-0">
                 {/* ปุ่มสลับโหมด (ถ้าเข้าสู่ระบบ) */}
                 {isLoggedIn && (
                   <button
                     onClick={() => setIsAnonymous(!isAnonymous)}
-                    className="text-white hover:text-blue-200 text-sm px-2 py-1 rounded bg-blue-700 hover:bg-blue-600 transition"
+                    className="text-white hover:text-blue-200 text-xs px-2 py-1 rounded bg-blue-700 hover:bg-blue-600 transition whitespace-nowrap"
                     title={isAnonymous ? "ใช้บัญชี" : "ไม่ระบุตัวตน"}
                   >
-                    {isAnonymous ? '👤 ไม่ระบุตัวตน' : '✓ บัญชี'}
+                    {isAnonymous ? '👤 ไม่ระบุ' : '✓ บัญชี'}
                   </button>
                 )}
                 {/* ปุ่มปิด Widget */}
@@ -256,7 +256,7 @@ export default function ChatWidget() {
             {messages.length === 0 ? (
               <div className="text-center text-gray-400 py-8">
                 <p className="text-2xl mb-2">💬</p>
-                <p>ยังไม่มีข้อความ เริ่มการสนทนา!</p>
+                <p className="text-sm">ยังไม่มีข้อความ เริ่มการสนทนา!</p>
               </div>
             ) : (
               <>
@@ -268,7 +268,7 @@ export default function ChatWidget() {
                 }`}
               >
                 <div
-                  className={`max-w-xs px-3 py-2 rounded-lg ${
+                  className={`max-w-xs px-3 py-2 rounded-lg text-sm sm:text-base ${
                     message.sender === 'user'
                       ? 'bg-blue-500 text-white rounded-br-none'
                       : 'bg-gray-300 text-black rounded-bl-none'
@@ -281,7 +281,7 @@ export default function ChatWidget() {
                     </p>
                   )}
                   {/* ข้อความ */}
-                  <p className="text-sm">{message.text}</p>
+                  <p className="break-words">{message.text}</p>
                   {/* เวลา */}
                   <span className="text-xs opacity-70">
                     {message.timestamp.toLocaleTimeString('th-TH', {
@@ -299,15 +299,15 @@ export default function ChatWidget() {
           </div>
 
           {/* ส่วนป้อนข้อมูล */}
-          <div className="border-t p-3 bg-white rounded-b-md space-y-2">
+          <div className="border-t p-3 bg-white rounded-b-md space-y-2 sticky bottom-0 z-10">
             {/* ป้อนชื่อผู้ใช้ (แสดงเมื่อไม่ระบุตัวตน) */}
             {isAnonymous ? (
               <input
                 type="text"
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
-                placeholder="ชื่อของคุณ (ถ้ากำหนด)"
-                className="w-full border border-gray-300 rounded px-3 py-1 text-sm text-black focus:outline-none focus:border-blue-500"
+                placeholder="ชื่อของคุณ"
+                className="w-full border border-gray-300 rounded px-3 py-2 text-sm text-black focus:outline-none focus:border-blue-500"
               />
             ) : (
               <div className="text-sm text-gray-600 px-3 py-1">
@@ -323,20 +323,20 @@ export default function ChatWidget() {
                 onKeyPress={handleKeyPress}
               placeholder="พิมพ์ข้อความ..."
                 disabled={isLoading}
-                className="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500 disabled:bg-gray-100 text-black placeholder-gray-400"
+                className="flex-1 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500 disabled:bg-gray-100 text-black placeholder-gray-400"
             />
               {/* ปุ่มส่ง */}
             <button
               onClick={handleSendMessage}
                 disabled={isLoading || !inputValue.trim()}
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded hover:bg-blue-700 transition font-medium disabled:bg-gray-400 disabled:cursor-not-allowed text-sm sm:text-base"
                 title="ส่งข้อความ (Enter)"
             >
                 {isLoading ? '⏳' : '✓'}
             </button>
             </div>
             <p className="text-xs text-gray-500 text-center">
-              💡 ข้อความจะบันทึกไว้ใน Firebase หากตั้งค่าไว้ มิฉะนั้นจะบันทึกไว้ในเครื่อง (localStorage)
+              💡 ข้อความจะบันทึกไว้ใน Firebase หากตั้งค่าไว้ มิฉะนั้นจะบันทึกไว้ในเครื่อง
             </p>
           </div>
         </div>
