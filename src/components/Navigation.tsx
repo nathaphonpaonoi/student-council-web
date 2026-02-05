@@ -26,7 +26,7 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-blue-600 to-blue-800 shadow-lg relative">
+    <nav className="bg-gradient-to-r from-blue-800 to-blue-950 shadow-2xl relative mb-2">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
