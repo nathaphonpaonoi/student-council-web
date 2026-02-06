@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import ChatWidget from "@/components/ChatWidget";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AuthProvider } from "@/context/AuthContext";
 
 const geistSans = Geist({
@@ -28,12 +29,13 @@ export default function RootLayout({
   return (
     <html lang="th">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
       >
         <AuthProvider>
           <Navigation />
           {children}
           <ChatWidget />
+          <SpeedInsights />
         </AuthProvider>
       </body>
     </html>
